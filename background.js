@@ -106,14 +106,14 @@ browser.contextMenus.create({
 });
 
 browser.contextMenus.create({
-	id: "trilium-save-cropped-screenshot",
+	id: "trilium-clip-screenshot",
 	title: "Clip screenshot to Trilium",
 	contexts: ["page"]
 });
 
 browser.contextMenus.create({
 	id: "trilium-save-cropped-screenshot",
-	title: "Crop screen shot to Trilium",
+	title: "Crop screenshot to Trilium",
 	contexts: ["page"]
 });
 
@@ -392,6 +392,9 @@ async function saveTabs() {
 browser.contextMenus.onClicked.addListener(async function(info) {
 	if (info.menuItemId === 'trilium-save-selection') {
 		await saveSelection();
+	}
+	else if (info.menuItemId === 'trilium-clip-screenshot') {
+		await saveWholeScreenshot(info.pageUrl);
 	}
 	else if (info.menuItemId === 'trilium-save-cropped-screenshot') {
 		await saveCroppedScreenshot(info.pageUrl);
