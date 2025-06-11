@@ -1,9 +1,9 @@
 {
   "manifest_version": 3,
   "name": "Trilium Web Clipper (dev)",
-  "version": "1.0.1",
-  "description": "Save web clippings to Trilium Notes.",
-  "homepage_url": "https://github.com/zadam/trilium-web-clipper",
+  "version": "1.1.1",
+  "description": "Save web clippings to Trilium Notes. Adapted to Google Chrome Manifest V3 by Nriver.",
+  "homepage_url": "https://github.com/Nriver/trilium-web-clipper-v3",
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
