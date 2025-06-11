@@ -270,7 +270,7 @@ async function prepareMessageResponse(message) {
 			messageText = message.message;
 		}
 
-		await requireLib('/lib/toast.js');
+		await requireLib('lib/toast.js');
 
 		showToast(messageText, {
 			settings: {
@@ -304,34 +304,56 @@ async function prepareMessageResponse(message) {
 	else if (message.name === 'trilium-get-rectangle-for-screenshot') {
 		return getRectangleArea();
 	}
+	else if (message.name === 'get-device-pixel-ratio') {
+		return window.devicePixelRatio || 1;
+	}
 	else if (message.name === "trilium-save-page") {
-		await requireLib("/lib/JSDOMParser.js");
-		await requireLib("/lib/Readability.js");
-		await requireLib("/lib/Readability-readerable.js");
+		try {
+			console.log("Starting to save page...");
 
-		const {title, body} = getReadableDocument();
+			await requireLib("lib/JSDOMParser.js");
+			console.log("JSDOMParser loaded");
 
-		makeLinksAbsolute(body);
+			await requireLib("lib/Readability.js");
+			console.log("Readability loaded");
 
-		const images = getImages(body);
+			await requireLib("lib/Readability-readerable.js");
+			console.log("Readability-readerable loaded");
 
-        var labels = {};
-		const dates = getDocumentDates();
-		if (dates.publishedDate) {
-			labels['publishedDate'] = dates.publishedDate.toISOString().substring(0, 10);
+			const {title, body} = getReadableDocument();
+			console.log("Document parsed with Readability");
+
+			makeLinksAbsolute(body);
+			console.log("Links made absolute");
+
+			const images = getImages(body);
+			console.log("Images processed");
+
+	        var labels = {};
+			const dates = getDocumentDates();
+			if (dates.publishedDate) {
+				labels['publishedDate'] = dates.publishedDate.toISOString().substring(0, 10);
+			}
+			if (dates.modifiedDate) {
+				labels['modifiedDate'] = dates.publishedDate.toISOString().substring(0, 10);
+			}
+			console.log("Dates processed");
+
+			const result = {
+				title: title,
+				content: body.innerHTML,
+				images: images,
+				pageUrl: getPageLocationOrigin() + location.pathname + location.search,
+				clipType: 'page',
+				labels: labels
+			};
+
+			console.log("Page save completed successfully");
+			return result;
+		} catch (error) {
+			console.error("Error in trilium-save-page:", error);
+			throw error;
 		}
-		if (dates.modifiedDate) {
-			labels['modifiedDate'] = dates.publishedDate.toISOString().substring(0, 10);
-		}
-
-		return {
-			title: title,
-			content: body.innerHTML,
-			images: images,
-			pageUrl: getPageLocationOrigin() + location.pathname + location.search,
-			clipType: 'page',
-			labels: labels
-		};
 	}
 	else {
 		throw new Error('Unknown command: ' + JSON.stringify(message));
@@ -344,8 +366,66 @@ const loadedLibs = [];
 
 async function requireLib(libPath) {
 	if (!loadedLibs.includes(libPath)) {
-		loadedLibs.push(libPath);
+		// Check if the library is already available globally
+		const libName = libPath.split('/').pop().split('.')[0];
 
-		await browser.runtime.sendMessage({name: 'load-script', file: libPath});
+		// For known libraries, check if they're already loaded
+		if (libName === 'JSDOMParser' && typeof JSDOMParser !== 'undefined') {
+			loadedLibs.push(libPath);
+			return;
+		}
+		if (libName === 'Readability' && typeof Readability !== 'undefined') {
+			loadedLibs.push(libPath);
+			return;
+		}
+		if (libName === 'Readability-readerable' && typeof isProbablyReaderable !== 'undefined') {
+			loadedLibs.push(libPath);
+			return;
+		}
+
+		try {
+			console.log(`Loading library: ${libPath}`);
+
+			// Try background script method first
+			try {
+				const response = await browser.runtime.sendMessage({name: 'load-script', file: libPath});
+				console.log(`Response for ${libPath}:`, response);
+
+				if (response && response.success) {
+					loadedLibs.push(libPath);
+					console.log(`Successfully loaded library via background script: ${libPath}`);
+					return;
+				}
+			} catch (bgError) {
+				console.log(`Background script method failed for ${libPath}, trying direct injection:`, bgError);
+			}
+
+			// Fallback: try direct script injection
+			const script = document.createElement('script');
+			script.src = browser.runtime.getURL(libPath);
+
+			return new Promise((resolve, reject) => {
+				script.onload = () => {
+					loadedLibs.push(libPath);
+					console.log(`Successfully loaded library via direct injection: ${libPath}`);
+					document.head.removeChild(script);
+					resolve();
+				};
+
+				script.onerror = (error) => {
+					console.error(`Failed to load library via direct injection: ${libPath}`, error);
+					if (document.head.contains(script)) {
+						document.head.removeChild(script);
+					}
+					reject(new Error(`Failed to load ${libPath}`));
+				};
+
+				document.head.appendChild(script);
+			});
+
+		} catch (error) {
+			console.error(`Failed to load library ${libPath}:`, error);
+			throw error;
+		}
 	}
 }

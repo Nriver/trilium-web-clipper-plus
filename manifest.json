@@ -1,10 +1,12 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Trilium Web Clipper (dev)",
   "version": "1.0.1",
   "description": "Save web clippings to Trilium Notes.",
   "homepage_url": "https://github.com/zadam/trilium-web-clipper",
-  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
   "icons": {
     "32": "icons/32.png",
     "48": "icons/48.png",
@@ -13,13 +15,17 @@
   "permissions": [
     "activeTab",
     "tabs",
+    "storage",
+    "contextMenus",
+    "scripting",
+    "offscreen"
+  ],
+  "host_permissions": [
     "http://*/",
     "https://*/",
-    "<all_urls>",
-    "storage",
-    "contextMenus"
+    "<all_urls>"
   ],
-  "browser_action": {
+  "action": {
     "default_icon": "icons/32.png",
     "default_title": "Trilium Web Clipper",
     "default_popup": "popup/popup.html"
@@ -37,12 +43,7 @@
     }
   ],
   "background": {
-    "scripts": [
-      "lib/browser-polyfill.js",
-      "utils.js",
-      "trilium_server_facade.js",
-      "background.js"
-    ]
+    "service_worker": "background.js"
   },
   "options_ui": {
     "page": "options/options.html"
@@ -67,6 +68,17 @@
       }
     }
   },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "lib/JSDOMParser.js",
+        "lib/Readability.js",
+        "lib/Readability-readerable.js",
+        "lib/toast.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "browser_specific_settings": {
     "gecko": {
       "id": "{1410742d-b377-40e7-a9db-63dc9c6ec99c}"

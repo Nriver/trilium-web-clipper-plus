@@ -132,7 +132,7 @@ class TriliumServerFacade {
 	}
 
 	async triggerSearchNoteByUrl(noteUrl) {
-		const resp = await triliumServerFacade.callService('GET', 'notes-by-url/' + encodeURIComponent(noteUrl))
+		const resp = await this.callService('GET', 'notes-by-url/' + encodeURIComponent(noteUrl))
 		let newStatus = {
 			status: 'not-found',
 			noteId: null
@@ -222,4 +222,14 @@ class TriliumServerFacade {
 	}
 }
 
-window.triliumServerFacade = new TriliumServerFacade();
+// In service worker context, use globalThis instead of window
+const triliumServerFacade = new TriliumServerFacade();
+
+// Make it available globally for both service worker and traditional contexts
+if (typeof window !== 'undefined') {
+    // @ts-ignore
+    window.triliumServerFacade = triliumServerFacade;
+} else {
+    // @ts-ignore
+    globalThis.triliumServerFacade = triliumServerFacade;
+}
