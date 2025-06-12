@@ -1,26 +1,52 @@
 # Trilium Web Clipper Plus
 
-Forked from zadam/trilium-web-clipper, moded features by Nriver:
-- adapted to Google Chrome Manifest V3
-- added i18n support
-- new name and new logo :)
-- fix some bugs
+[中文说明](README_CN.md)
 
-Trilium Web Clipper Plus is a web browser extension which allows user to clip text, screenshots, whole pages and short notes and save them directly to [Trilium Notes](https://github.com/zadam/trilium).
+> 💡 *Take a quick break and stretch if you've been sitting too long :)*
 
-For more details, see the [wiki page](https://github.com/zadam/trilium/wiki/Web-clipper).
+## ✨ Overview
 
-## Keyboard shortcuts
-Keyboard shortcuts are available for most functions:  
-* Save selected text: `Ctrl+Shift+S` (Mac: `Cmd+Shift+S`)
-* Save whole page: `Alt+Shift+S` (Mac: `Opt+Shift+S`)
-* Save screenshot: `Ctrl+Shift+E` (Mac: `Cmd+Shift+E`)
+**Trilium Web Clipper Plus** is an enhanced browser extension for [Trilium Notes](https://github.com/zadam/trilium), designed to let you easily clip selected text, screenshots, full web pages, or quick notes—right into your Trilium workspace.
 
-To set custom shortcuts, follow the directions for your browser.
+This project is a fork of [zadam/trilium-web-clipper](https://github.com/zadam/trilium-web-clipper), with added features and updates by **Nriver**.
 
-**Firefox**: `about:addons` > Gear icon ⚙️ > Manage extension shortcuts
+## 🚀 Key Features
 
-**Chrome**: `chrome://extensions/shortcuts`
+* ✔️ Compatible with Chrome Manifest V3
+* 🌐 Internationalization (i18n) support
+* 🔧 Bug fixes and improvements
+* 🆕 New name and logo
 
-## Credits
-Some parts of the code are based on the [Joplin Notes browser extension](https://github.com/laurent22/joplin/tree/master/Clipper).
+If you find this project helpful, please consider [supporting my work](#donation). Thank you!
+
+## ⌨️ Keyboard Shortcuts
+
+Use these default shortcuts for quick clipping:
+
+| Action             | Windows / Linux | macOS         |
+| ------------------ | --------------- | ------------- |
+| Save selected text | `Ctrl+Shift+S`  | `Cmd+Shift+S` |
+| Save full page     | `Alt+Shift+S`   | `Opt+Shift+S` |
+| Save screenshot    | `Ctrl+Shift+E`  | `Cmd+Shift+E` |
+
+> 🔧 Customize shortcuts in your browser settings:
+> **Chrome**: `chrome://extensions/shortcuts`
+
+## 🙏 Donation
+
+If you enjoy using **Trilium Web Clipper Plus**, your support would mean a lot!
+
+**Ko-fi**
+[![Support Me on Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/nriver)
+
+**Alipay**
+![Alipay](https://github.com/Nriver/trilium-translation/raw/main/docs/alipay.png)
+
+**WeChat Pay**
+![WeChat Pay](https://github.com/Nriver/trilium-translation/raw/main/docs/wechat_pay.png)
+
+## 📌 Credits
+
+This extension is based on the original [Trilium Web Clipper](https://github.com/zadam/trilium-web-clipper) by [zadam](https://github.com/zadam)—huge thanks for his outstanding work on Trilium Notes!
+
+Portions of the code are also inspired by the [Joplin Notes Clipper](https://github.com/laurent22/joplin/tree/master/Clipper).
