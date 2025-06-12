@@ -19,6 +19,14 @@ This project is a fork of [zadam/trilium-web-clipper](https://github.com/zadam/t
 
 If you find this project helpful, please consider [supporting my work](#donation). Thank you!
 
+## 📸 Screenshots
+
+### Extension Popup Interface
+![Extension Popup](docs/screenshot-en-1.webp)
+
+### Clipping Options and Settings
+![Clipping Options](docs/screenshot-en-2.webp)
+
 ## ⌨️ Keyboard Shortcuts
 
 Use these default shortcuts for quick clipping:
