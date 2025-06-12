@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Trilium Web Clipper (dev)",
+  "name": "Trilium Web Clipper Plus (dev)",
   "version": "1.1.1",
   "description": "Save web clippings to Trilium Notes. Adapted to Google Chrome Manifest V3 by Nriver.",
   "homepage_url": "https://github.com/Nriver/trilium-web-clipper-v3",
@@ -8,9 +8,9 @@
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
   "icons": {
-    "32": "icons/32.png",
-    "48": "icons/48.png",
-    "96": "icons/96.png"
+    "16": "icons/logo3_16x16.png",
+    "48": "icons/logo3_48x48.png",
+    "128": "icons/logo3_128x128.png"
   },
   "permissions": [
     "activeTab",
@@ -26,8 +26,12 @@
     "<all_urls>"
   ],
   "action": {
-    "default_icon": "icons/32.png",
-    "default_title": "Trilium Web Clipper",
+    "default_icon": {
+      "16": "icons/logo3_16x16.png",
+      "48": "icons/logo3_48x48.png",
+      "128": "icons/logo3_128x128.png"
+    },
+    "default_title": "Trilium Web Clipper Plus",
     "default_popup": "popup/popup.html"
   },
   "content_scripts": [

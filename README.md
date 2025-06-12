@@ -1,11 +1,12 @@
-# Trilium Web Clipper
+# Trilium Web Clipper Plus
 
 Forked from zadam/trilium-web-clipper, moded features by Nriver:
-- adapted to Google Chrome Manifest V3.
-- added i18n support.
-- fix some bugs.
+- adapted to Google Chrome Manifest V3
+- added i18n support
+- new name and new logo :)
+- fix some bugs
 
-Trilium Web Clipper is a web browser extension which allows user to clip text, screenshots, whole pages and short notes and save them directly to [Trilium Notes](https://github.com/zadam/trilium). 
+Trilium Web Clipper Plus is a web browser extension which allows user to clip text, screenshots, whole pages and short notes and save them directly to [Trilium Notes](https://github.com/zadam/trilium).
 
 For more details, see the [wiki page](https://github.com/zadam/trilium/wiki/Web-clipper).
 

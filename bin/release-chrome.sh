@@ -13,7 +13,7 @@ cp -r icons lib options popup i18n *.js manifest.json "dist/$BUILD_DIR"
 
 cd dist/"${BUILD_DIR}" || exit
 
-jq '.name = "Trilium Web Clipper"' manifest.json | sponge manifest.json
+jq '.name = "Trilium Web Clipper Plus"' manifest.json | sponge manifest.json
 jq 'del(.browser_specific_settings)' manifest.json | sponge manifest.json
 
 EXT_FILE_NAME=trilium_web_clipper-${VERSION}-chrome.zip

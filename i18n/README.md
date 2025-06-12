@@ -1,6 +1,6 @@
-# Trilium Web Clipper i18n System
+# Trilium Web Clipper Plus i18n System
 
-This directory contains the internationalization (i18n) system for the Trilium Web Clipper extension.
+This directory contains the internationalization (i18n) system for the Trilium Web Clipper Plus extension.
 
 ## Features
 
@@ -33,7 +33,7 @@ i18n/
 Add `data-i18n` attributes to elements that need translation:
 
 ```html
-<h1 data-i18n="app_title">Trilium Web Clipper</h1>
+<h1 data-i18n="app_title">Trilium Web Clipper Plus</h1>
 <button data-i18n="save">Save</button>
 <input type="submit" data-i18n="login_server" value="Login to the server instance"/>
 ```

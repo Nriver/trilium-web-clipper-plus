@@ -21,7 +21,7 @@ if ! git diff-index --quiet HEAD --; then
     exit 1
 fi
 
-echo "Releasing Trilium Web Clipper $VERSION"
+echo "Releasing Trilium Web Clipper Plus $VERSION"
 
 jq '.version = "'"$VERSION"'"' manifest.json | sponge manifest.json
 

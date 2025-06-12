@@ -1,5 +1,5 @@
 /**
- * Trilium Web Clipper i18n System
+ * Trilium Web Clipper Plus i18n System
  * Supports internationalization with browser language detection and fallback
  */
 

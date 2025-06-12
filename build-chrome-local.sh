@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Building Trilium Web Clipper for Chrome (local development)..."
+echo "Building Trilium Web Clipper Plus for Chrome (local development)..."
 
 # Get version from manifest
 VERSION=$(jq -r ".version" manifest.json)
@@ -23,11 +23,11 @@ echo "Updating manifest for Chrome..."
 # Remove the name suffix for local build
 if command -v jq > /dev/null; then
     # Use jq if available
-    jq '.name = "Trilium Web Clipper"' manifest.json > manifest.json.tmp && mv manifest.json.tmp manifest.json
+    jq '.name = "Trilium Web Clipper Plus"' manifest.json > manifest.json.tmp && mv manifest.json.tmp manifest.json
     jq 'del(.browser_specific_settings)' manifest.json > manifest.json.tmp && mv manifest.json.tmp manifest.json
 else
     # Fallback to sed if jq is not available
-    sed -i 's/"Trilium Web Clipper (dev)"/"Trilium Web Clipper"/' manifest.json
+    sed -i 's/"Trilium Web Clipper Plus (dev)"/"Trilium Web Clipper Plus"/' manifest.json
     # Remove Firefox-specific browser_specific_settings section
     sed -i '/browser_specific_settings/,/}/d' manifest.json
 fi

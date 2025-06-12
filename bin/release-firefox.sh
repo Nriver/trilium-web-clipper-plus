@@ -13,7 +13,7 @@ cp -r icons lib options popup i18n *.js manifest.json "$BUILD_DIR"
 
 cd dist/"${ARTIFACT_NAME}" || exit
 
-jq '.name = "Trilium Web Clipper"' manifest.json | sponge manifest.json
+jq '.name = "Trilium Web Clipper Plus"' manifest.json | sponge manifest.json
 
 web-ext sign --api-key $FIREFOX_API_KEY --api-secret $FIREFOX_API_SECRET --artifacts-dir ../
 

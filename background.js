@@ -103,7 +103,7 @@ async function takeWholeScreenshot() {
 browser.runtime.onInstalled.addListener(() => {
 	if (isDevEnv()) {
 		browser.action.setIcon({
-			path: 'icons/32-dev.png',
+			path: 'icons/logo3-dev_128x128.png',
 		});
 	}
 });
