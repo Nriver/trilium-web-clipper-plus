@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Trilium Web Clipper Plus (dev)",
   "version": "1.1.2",
-  "description": "Save web clippings to Trilium Notes. Forked from zadam/trilium-web-clipper, Adapted to Google Chrome Manifest V3 and added more features by Nriver.",
+  "description": "Save web clippings to Trilium Notes. Forked from zadam/trilium-web-clipper, modded by Nriver.",
   "homepage_url": "https://github.com/Nriver/trilium-web-clipper-v3",
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
