@@ -1,10 +1,19 @@
 // Import dependencies for service worker
-importScripts('lib/browser-polyfill.js', 'utils.js', 'trilium_server_facade.js');
+importScripts('lib/browser-polyfill.js', 'utils.js', 'trilium_server_facade.js', 'i18n/i18n.js');
 
 // Ensure triliumServerFacade is available globally
 function getTriliumServerFacade() {
     // @ts-ignore
     return globalThis.triliumServerFacade || window?.triliumServerFacade;
+}
+
+// Initialize i18n for service worker
+let i18nInitialized = false;
+async function ensureI18nInitialized() {
+    if (!i18nInitialized) {
+        await initI18n();
+        i18nInitialized = true;
+    }
 }
 
 // Keyboard shortcuts
@@ -99,47 +108,55 @@ browser.runtime.onInstalled.addListener(() => {
 	}
 });
 
-browser.contextMenus.create({
-	id: "trilium-save-selection",
-	title: "Save selection to Trilium",
-	contexts: ["selection"]
-});
+// Create context menus with i18n support
+async function createContextMenus() {
+	await ensureI18nInitialized();
 
-browser.contextMenus.create({
-	id: "trilium-clip-screenshot",
-	title: "Clip screenshot to Trilium",
-	contexts: ["page"]
-});
+	browser.contextMenus.create({
+		id: "trilium-save-selection",
+		title: t("save_selection_context"),
+		contexts: ["selection"]
+	});
 
-browser.contextMenus.create({
-	id: "trilium-save-cropped-screenshot",
-	title: "Crop screenshot to Trilium",
-	contexts: ["page"]
-});
+	browser.contextMenus.create({
+		id: "trilium-clip-screenshot",
+		title: t("clip_screenshot_context"),
+		contexts: ["page"]
+	});
 
-browser.contextMenus.create({
-	id: "trilium-save-whole-screenshot",
-	title: "Save whole screen shot to Trilium",
-	contexts: ["page"]
-});
+	browser.contextMenus.create({
+		id: "trilium-save-cropped-screenshot",
+		title: t("crop_screenshot_context"),
+		contexts: ["page"]
+	});
 
-browser.contextMenus.create({
-	id: "trilium-save-page",
-	title: "Save whole page to Trilium",
-	contexts: ["page"]
-});
+	browser.contextMenus.create({
+		id: "trilium-save-whole-screenshot",
+		title: t("save_whole_screenshot_context"),
+		contexts: ["page"]
+	});
 
-browser.contextMenus.create({
-	id: "trilium-save-link",
-	title: "Save link to Trilium",
-	contexts: ["link"]
-});
+	browser.contextMenus.create({
+		id: "trilium-save-page",
+		title: t("save_page_context"),
+		contexts: ["page"]
+	});
 
-browser.contextMenus.create({
-	id: "trilium-save-image",
-	title: "Save image to Trilium",
-	contexts: ["image"]
-});
+	browser.contextMenus.create({
+		id: "trilium-save-link",
+		title: t("save_link_context"),
+		contexts: ["link"]
+	});
+
+	browser.contextMenus.create({
+		id: "trilium-save-image",
+		title: t("save_image_context"),
+		contexts: ["image"]
+	});
+}
+
+// Initialize context menus
+createContextMenus();
 
 async function getActiveTab() {
 	const tabs = await browser.tabs.query({
@@ -233,7 +250,8 @@ async function saveSelection() {
 		return;
 	}
 
-	toast("Selection has been saved to Trilium.", resp.noteId);
+	await ensureI18nInitialized();
+	toast(t("selection_saved"), resp.noteId);
 }
 
 async function getImagePayloadFromSrc(src, pageUrl) {
@@ -267,7 +285,8 @@ async function saveCroppedScreenshot(pageUrl) {
 		return;
 	}
 
-	toast("Screenshot has been saved to Trilium.", resp.noteId);
+	await ensureI18nInitialized();
+	toast(t("screenshot_saved"), resp.noteId);
 }
 
 async function saveWholeScreenshot(pageUrl) {
@@ -281,7 +300,8 @@ async function saveWholeScreenshot(pageUrl) {
 		return;
 	}
 
-	toast("Screenshot has been saved to Trilium.", resp.noteId);
+	await ensureI18nInitialized();
+	toast(t("screenshot_saved"), resp.noteId);
 }
 
 async function saveImage(srcUrl, pageUrl) {
@@ -293,7 +313,8 @@ async function saveImage(srcUrl, pageUrl) {
 		return;
 	}
 
-	toast("Image has been saved to Trilium.", resp.noteId);
+	await ensureI18nInitialized();
+	toast(t("image_saved"), resp.noteId);
 }
 
 async function saveWholePage() {
@@ -314,11 +335,13 @@ async function saveWholePage() {
 			return;
 		}
 
-		toast("Page has been saved to Trilium.", resp.noteId);
+		await ensureI18nInitialized();
+		toast(t("page_saved"), resp.noteId);
 		console.log("Page save completed successfully");
 	} catch (error) {
 		console.error("Error in saveWholePage:", error);
-		toast("Failed to save page: " + error.message);
+		await ensureI18nInitialized();
+		toast(t("failed_to_save", {error: error.message}));
 	}
 }
 
@@ -340,7 +363,8 @@ async function saveLinkWithNote(title, content) {
 		return false;
 	}
 
-	toast("Link with note has been saved to Trilium.", resp.noteId);
+	await ensureI18nInitialized();
+	toast(t("link_saved"), resp.noteId);
 
 	return true;
 }
@@ -386,7 +410,8 @@ async function saveTabs() {
 
 	const tabIds = tabs.map(tab=>{return tab.id});
 
-	toast(`${tabs.length} links have been saved to Trilium.`, resp.noteId, tabIds);
+	await ensureI18nInitialized();
+	toast(t("tabs_saved"), resp.noteId, tabIds);
 }
 
 browser.contextMenus.onClicked.addListener(async function(info) {
@@ -422,7 +447,8 @@ browser.contextMenus.onClicked.addListener(async function(info) {
 			return;
 		}
 
-		toast("Link has been saved to Trilium.", resp.noteId);
+		await ensureI18nInitialized();
+		toast(t("link_saved"), resp.noteId);
 	}
 	else if (info.menuItemId === 'trilium-save-page') {
 		await saveWholePage();

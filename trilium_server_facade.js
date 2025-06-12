@@ -205,7 +205,19 @@ class TriliumServerFacade {
 		catch (e) {
 			console.log("Sending request to trilium failed", e);
 
-			toast('Your request failed because we could not contact Trilium instance. Please make sure Trilium is running and is accessible.');
+			// Load i18n for error messages
+			if (typeof initI18n !== 'undefined') {
+				try {
+					await initI18n();
+					toast(t('trilium_connection_failed'));
+				} catch (i18nError) {
+					// Fallback to English if i18n fails
+					toast('Your request failed because we could not contact Trilium instance. Please make sure Trilium is running and is accessible.');
+				}
+			} else {
+				// Fallback to English if i18n is not available
+				toast('Your request failed because we could not contact Trilium instance. Please make sure Trilium is running and is accessible.');
+			}
 
 			return null;
 		}

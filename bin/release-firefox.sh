@@ -9,7 +9,7 @@ BUILD_DIR=dist/$ARTIFACT_NAME
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"
 
-cp -r icons lib options popup *.js manifest.json "$BUILD_DIR"
+cp -r icons lib options popup i18n *.js manifest.json "$BUILD_DIR"
 
 cd dist/"${ARTIFACT_NAME}" || exit
 

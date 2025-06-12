@@ -9,7 +9,7 @@ BUILD_DIR=trilium-web-clipper-chrome
 rm -rf "dist/$BUILD_DIR"
 mkdir -p "dist/$BUILD_DIR"
 
-cp -r icons lib options popup *.js manifest.json "dist/$BUILD_DIR"
+cp -r icons lib options popup i18n *.js manifest.json "dist/$BUILD_DIR"
 
 cd dist/"${BUILD_DIR}" || exit
 

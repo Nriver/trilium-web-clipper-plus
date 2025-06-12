@@ -64,7 +64,7 @@ function getDocumentDates() {
 }
 
 function getRectangleArea() {
-	return new Promise((resolve, reject) => {
+	return new Promise(async (resolve, reject) => {
 		const overlay = document.createElement('div');
 		overlay.style.opacity = '0.6';
 		overlay.style.background = 'black';
@@ -95,7 +95,10 @@ function getRectangleArea() {
 		messageComp.style.left = Math.round(document.body.clientWidth / 2 - messageCompWidth / 2) + 'px';
 		messageComp.style.zIndex = overlay.style.zIndex + 1;
 
-		messageComp.textContent = 'Drag and release to capture a screenshot';
+		// Load i18n for content script
+		await requireLib('i18n/i18n.js');
+		await initI18n();
+		messageComp.textContent = t('drag_release_screenshot');
 
 		document.body.appendChild(messageComp);
 
@@ -251,9 +254,13 @@ async function prepareMessageResponse(message) {
 			messageText = document.createElement('p');
 			messageText.setAttribute("style", "padding: 0; margin: 0; font-size: larger;")
 			messageText.appendChild(document.createTextNode(message.message + " "));
+			// Load i18n for toast messages
+			await requireLib('i18n/i18n.js');
+			await initI18n();
+
 			messageText.appendChild(createLink(
 				{name: 'openNoteInTrilium', noteId: message.noteId},
-				"Open in Trilium."
+				t("open_in_trilium")
 			));
 
 			// only after saving tabs
@@ -261,7 +268,7 @@ async function prepareMessageResponse(message) {
 				messageText.appendChild(document.createElement("br"));
 				messageText.appendChild(createLink(
 					{name: 'closeTabs', tabIds: message.tabIds},
-					"Close saved tabs.",
+					t("close_saved_tabs"),
 					"tomato"
 				));
 			}

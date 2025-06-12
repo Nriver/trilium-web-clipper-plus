@@ -11,51 +11,60 @@
 <div id="error-message" style="font-weight: bold; color: red; display: none;"></div>
 <div id="success-message" style="font-weight: bold; color: green; display: none;"></div>
 
-<h2>Trilium desktop instance</h2>
+<h2 data-i18n="trilium_desktop_instance">Trilium desktop instance</h2>
 
-<p>Web clipper by default tries to find a running desktop instance on port 37740. If you configured your Trilium desktop app to run on a different port, you can specify it here (otherwise keep it empty).</p>
+<p data-i18n="desktop_port_description">Web clipper by default tries to find a running desktop instance on port 37740 or 37840. If you configured your Trilium desktop app to run on a different port, you can specify it here (otherwise keep it empty).</p>
 
 <form id="trilium-desktop-setup-form">
     <p>
-        <label for="trilium-desktop-port" style="font-weight: bold;">Trilium desktop port: </label>
+        <label for="trilium-desktop-port" style="font-weight: bold;" data-i18n="trilium_desktop_port">Trilium desktop port: </label>
 
-        <input type="text" id="trilium-desktop-port" size="6" style="text-align: right;"/> (normally keep this empty)
+        <input type="text" id="trilium-desktop-port" style="text-align: right;" data-i18n="port_placeholder" placeholder="(normally keep this empty)"/>
     </p>
 
-    <input type="submit" value="Save">
+    <input type="submit" data-i18n="save_settings" value="Save">
 </form>
 
-<h2>Trilium server instance</h2>
+<h2 data-i18n="trilium_server_instance">Trilium server instance</h2>
 
-<p>If you have a server instance set up, you can optionally configure it as a fail over target for the clipped notes. Desktop instance will still be given priority, but in cases that the desktop instance is not available (e.g. it's not running), web clipper will send the notes to the server instance instead.</p>
+<p data-i18n="server_description">If you have a server instance set up, you can optionally configure it as a fail over target for the clipped notes. Desktop instance will still be given priority, but in cases that the desktop instance is not available (e.g. it's not running), web clipper will send the notes to the server instance instead.</p>
 
 <div id="trilium-server-configured" style="display: none;">
-    <strong>Trilium server instance has been already configured to <a id="trilium-server-link" href=""></a>.</strong>
+    <strong><span data-i18n="server_configured">Trilium server instance has been already configured to</span> <a id="trilium-server-link" href=""></a>.</strong>
 
-    <p>You can also <a id="reset-trilium-server-setup" href="javascript:">remove the current setup</a> and configure it again.</p>
+    <p><span>You can also</span> <a id="reset-trilium-server-setup" href="javascript:" data-i18n="remove_setup">remove the current setup</a> <span data-i18n="reconfigure">and configure it again.</span></p>
 </div>
 
 <form id="trilium-server-setup-form" style="display: none;">
     <table>
         <tr>
-            <th>Trilium server URL:</th>
+            <th data-i18n="trilium_server_url">Trilium server URL:</th>
             <td><input type="text" id="trilium-server-url"/></td>
         </tr>
         <tr>
-            <th>Password:</th>
+            <th data-i18n="password">Password:</th>
             <td><input type="password" id="trilium-server-password"/></td>
         </tr>
         <tr>
             <th></th>
-            <td><input type="submit" value="Login to the server instance"/></td>
+            <td><input type="submit" data-i18n="login_server" value="Login to the server instance"/></td>
         </tr>
     </table>
 
-    <p>Note that the entered password is not stored anywhere, it will be only used to retrieve an authorization token from the server instance which will be then used to send the clipped notes.</p>
+    <p data-i18n="password_note">Note that the entered password is not stored anywhere, it will be only used to retrieve an authorization token from the server instance which will be then used to send the clipped notes.</p>
 </form>
+
+<div style="margin-top: 20px;">
+    <label for="language-select" data-i18n="language">Language:</label>
+    <select id="language-select" style="margin-left: 10px;">
+        <option value="en" data-i18n="language_english">English</option>
+        <option value="zh" data-i18n="language_chinese">中文</option>
+    </select>
+</div>
 
 <script src="../lib/cash.min.js"></script>
 <script src="../lib/browser-polyfill.js"></script>
+<script src="../i18n/i18n.js"></script>
 <script src="options.js"></script>
 
 </body>

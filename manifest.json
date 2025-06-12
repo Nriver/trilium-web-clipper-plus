@@ -74,7 +74,10 @@
         "lib/JSDOMParser.js",
         "lib/Readability.js",
         "lib/Readability-readerable.js",
-        "lib/toast.js"
+        "lib/toast.js",
+        "i18n/i18n.js",
+        "i18n/locales/en.json",
+        "i18n/locales/zh.json"
       ],
       "matches": ["<all_urls>"]
     }

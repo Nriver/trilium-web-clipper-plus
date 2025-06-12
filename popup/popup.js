@@ -5,7 +5,7 @@ async function sendMessage(message) {
     catch (e) {
         console.log("Calling browser runtime failed:", e);
 
-        alert("Calling browser runtime failed. Refreshing page might help.");
+        alert(t("calling_runtime_failed"));
     }
 }
 
@@ -123,21 +123,21 @@ browser.runtime.onMessage.addListener(request => {
         let isConnected;
 
         if (triliumSearch.status === 'not-found') {
-            statusText = `<span style="color: red">Not found</span>`;
+            statusText = `<span style="color: red">${t("not_found")}</span>`;
             isConnected = false;
         }
         else if (triliumSearch.status === 'version-mismatch') {
-            const whatToUpgrade = triliumSearch.extensionMajor > triliumSearch.triliumMajor ? "Trilium Notes" : "this extension";
+            const whatToUpgrade = triliumSearch.extensionMajor > triliumSearch.triliumMajor ? t("trilium_notes") : t("this_extension");
 
-            statusText = `<span style="color: orange">Trilium instance found, but it is not compatible with this extension version. Please update ${whatToUpgrade} to the latest version.</span>`;
+            statusText = `<span style="color: orange">${t("version_mismatch", {whatToUpgrade})}</span>`;
             isConnected = true;
         }
         else if (triliumSearch.status === 'found-desktop') {
-            statusText = `<span style="color: green">Connected on port ${triliumSearch.port}</span>`;
+            statusText = `<span style="color: green">${t("connected_port", {port: triliumSearch.port})}</span>`;
             isConnected = true;
         }
         else if (triliumSearch.status === 'found-server') {
-            statusText = `<span style="color: green" title="Connected to ${triliumSearch.url}">Connected to the server</span>`;
+            statusText = `<span style="color: green" title="Connected to ${triliumSearch.url}">${t("connected_server")}</span>`;
             isConnected = true;
         }
 
@@ -150,15 +150,15 @@ browser.runtime.onMessage.addListener(request => {
         }
         else {
             $needsConnection.attr("disabled", "disabled");
-            $needsConnection.attr("title", "This action can't be performed without active connection to Trilium.");
+            $needsConnection.attr("title", t("action_needs_connection"));
         }
     }
     else if (request.name == "trilium-previously-visited"){
         const {searchNote} = request;
         if (searchNote.status === 'found'){
             const a = createLink({name: 'openNoteInTrilium', noteId: searchNote.noteId},
-            "Open in Trilium.")
-            noteFound = `Already visited website!`;
+            t("open_in_trilium"))
+            noteFound = t("already_visited");
             $alreadyVisited.html(noteFound);
             $alreadyVisited[0].appendChild(a);
         }else{
@@ -177,4 +177,8 @@ $checkConnectionButton.on("click", () => {
     })
 });
 
-$(() => browser.runtime.sendMessage({name: "send-trilium-search-status"}));
+// Initialize i18n and then send trilium search status
+$(async () => {
+    await initI18n();
+    browser.runtime.sendMessage({name: "send-trilium-search-status"});
+});

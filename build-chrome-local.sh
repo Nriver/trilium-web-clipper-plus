@@ -14,7 +14,7 @@ mkdir -p "$BUILD_DIR"
 
 # Copy necessary files
 echo "Copying files..."
-cp -r icons lib options popup *.js manifest.json "$BUILD_DIR"
+cp -r icons lib options popup i18n *.js manifest.json "$BUILD_DIR"
 
 cd "$BUILD_DIR"
 

@@ -19,7 +19,7 @@ async function saveTriliumServerSetup(e) {
 
     if ($triliumServerUrl.val().trim().length === 0
         || $triliumServerPassword.val().trim().length === 0) {
-        showError("One or more mandatory inputs are missing. Please fill in server URL and password.");
+        showError(t("missing_inputs"));
 
         return;
     }
@@ -39,20 +39,20 @@ async function saveTriliumServerSetup(e) {
         });
     }
     catch (e) {
-        showError("Unknown error: " + e.message);
+        showError(t("unknown_error", {message: e.message}));
         return;
     }
 
     if (resp.status === 401) {
-        showError("Incorrect credentials.");
+        showError(t("incorrect_credentials"));
     }
     else if (resp.status !== 200) {
-        showError("Unrecognised response with status code " + resp.status);
+        showError(t("unrecognised_response", {status: resp.status}));
     }
     else {
         const json = await resp.json();
 
-        showSuccess("Authentication against Trilium server has been successful.");
+        showSuccess(t("auth_successful"));
 
         $triliumServerPassword.val('');
 
@@ -93,7 +93,7 @@ $triilumDesktopSetupForm.on("submit", e => {
     const portNum = parseInt(port);
 
     if (port && (isNaN(portNum) || portNum <= 0 || portNum >= 65536)) {
-        showError(`Please enter valid port number.`);
+        showError(t("invalid_port"));
         return;
     }
 
@@ -101,7 +101,7 @@ $triilumDesktopSetupForm.on("submit", e => {
         triliumDesktopPort: port
     });
 
-    showSuccess(`Port number has been saved.`);
+    showSuccess(t("port_saved"));
 });
 
 async function restoreOptions() {
@@ -132,4 +132,20 @@ async function restoreOptions() {
     $triliumDesktopPort.val(triliumDesktopPort);
 }
 
-$(restoreOptions);
+// Language selector functionality
+const $languageSelect = $("#language-select");
+
+$languageSelect.on("change", async (e) => {
+    const selectedLanguage = e.target.value;
+    await changeLanguage(selectedLanguage);
+});
+
+// Initialize i18n and restore options
+$(async () => {
+    await initI18n();
+
+    // Set language selector to current language
+    $languageSelect.val(getCurrentLanguage());
+
+    await restoreOptions();
+});
