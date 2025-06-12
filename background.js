@@ -100,62 +100,79 @@ async function takeWholeScreenshot() {
 	return await browser.tabs.captureVisibleTab(null, { format: 'png' });
 }
 
-browser.runtime.onInstalled.addListener(() => {
+// Create context menus with i18n support
+async function createContextMenus() {
+	try {
+		await ensureI18nInitialized();
+
+		// Remove all existing context menus first to prevent duplicates
+		await browser.contextMenus.removeAll();
+
+		browser.contextMenus.create({
+			id: "trilium-save-selection",
+			title: t("save_selection_context"),
+			contexts: ["selection"]
+		});
+
+		browser.contextMenus.create({
+			id: "trilium-clip-screenshot",
+			title: t("clip_screenshot_context"),
+			contexts: ["page"]
+		});
+
+		browser.contextMenus.create({
+			id: "trilium-save-cropped-screenshot",
+			title: t("crop_screenshot_context"),
+			contexts: ["page"]
+		});
+
+		browser.contextMenus.create({
+			id: "trilium-save-whole-screenshot",
+			title: t("save_whole_screenshot_context"),
+			contexts: ["page"]
+		});
+
+		browser.contextMenus.create({
+			id: "trilium-save-page",
+			title: t("save_page_context"),
+			contexts: ["page"]
+		});
+
+		browser.contextMenus.create({
+			id: "trilium-save-link",
+			title: t("save_link_context"),
+			contexts: ["link"]
+		});
+
+		browser.contextMenus.create({
+			id: "trilium-save-image",
+			title: t("save_image_context"),
+			contexts: ["image"]
+		});
+
+		console.log("Context menus created successfully");
+	} catch (error) {
+		console.error("Error creating context menus:", error);
+	}
+}
+
+browser.runtime.onInstalled.addListener(async () => {
 	if (isDevEnv()) {
 		browser.action.setIcon({
 			path: 'icons/logo3-dev_128x128.png',
 		});
 	}
+
+	// Create context menus on installation/update
+	await createContextMenus();
 });
 
-// Create context menus with i18n support
-async function createContextMenus() {
-	await ensureI18nInitialized();
+// Also create context menus when service worker starts up
+browser.runtime.onStartup.addListener(async () => {
+	await createContextMenus();
+});
 
-	browser.contextMenus.create({
-		id: "trilium-save-selection",
-		title: t("save_selection_context"),
-		contexts: ["selection"]
-	});
-
-	browser.contextMenus.create({
-		id: "trilium-clip-screenshot",
-		title: t("clip_screenshot_context"),
-		contexts: ["page"]
-	});
-
-	browser.contextMenus.create({
-		id: "trilium-save-cropped-screenshot",
-		title: t("crop_screenshot_context"),
-		contexts: ["page"]
-	});
-
-	browser.contextMenus.create({
-		id: "trilium-save-whole-screenshot",
-		title: t("save_whole_screenshot_context"),
-		contexts: ["page"]
-	});
-
-	browser.contextMenus.create({
-		id: "trilium-save-page",
-		title: t("save_page_context"),
-		contexts: ["page"]
-	});
-
-	browser.contextMenus.create({
-		id: "trilium-save-link",
-		title: t("save_link_context"),
-		contexts: ["link"]
-	});
-
-	browser.contextMenus.create({
-		id: "trilium-save-image",
-		title: t("save_image_context"),
-		contexts: ["image"]
-	});
-}
-
-// Initialize context menus
+// Create context menus immediately when script loads (for development reloads)
 createContextMenus();
 
 async function getActiveTab() {
@@ -415,46 +432,65 @@ async function saveTabs() {
 }
 
 browser.contextMenus.onClicked.addListener(async function(info) {
-	if (info.menuItemId === 'trilium-save-selection') {
-		await saveSelection();
-	}
-	else if (info.menuItemId === 'trilium-clip-screenshot') {
-		await saveWholeScreenshot(info.pageUrl);
-	}
-	else if (info.menuItemId === 'trilium-save-cropped-screenshot') {
-		await saveCroppedScreenshot(info.pageUrl);
-	}
-	else if (info.menuItemId === 'trilium-save-whole-screenshot') {
-		await saveWholeScreenshot(info.pageUrl);
-	}
-	else if (info.menuItemId === 'trilium-save-image') {
-		await saveImage(info.srcUrl, info.pageUrl);
-	}
-	else if (info.menuItemId === 'trilium-save-link') {
-		// Create HTML string directly instead of using DOM APIs
-		const linkText = info.linkText || info.linkUrl;
-		const linkHtml = `<a href="${info.linkUrl}">${linkText}</a>`;
-
+	try {
+		// Get current tab info as fallback for missing properties
 		const activeTab = await getActiveTab();
+		const pageUrl = info.pageUrl || activeTab?.url || '';
 
-		const resp = await getTriliumServerFacade().callService('POST', 'clippings', {
-			title: activeTab.title,
-			content: linkHtml,
-			pageUrl: info.pageUrl
-		});
-
-		if (!resp) {
-			return;
+		if (info.menuItemId === 'trilium-save-selection') {
+			await saveSelection();
 		}
+		else if (info.menuItemId === 'trilium-clip-screenshot') {
+			await saveWholeScreenshot(pageUrl);
+		}
+		else if (info.menuItemId === 'trilium-save-cropped-screenshot') {
+			await saveCroppedScreenshot(pageUrl);
+		}
+		else if (info.menuItemId === 'trilium-save-whole-screenshot') {
+			await saveWholeScreenshot(pageUrl);
+		}
+		else if (info.menuItemId === 'trilium-save-image') {
+			const srcUrl = info.srcUrl || '';
+			if (!srcUrl) {
+				console.error("No image source URL available");
+				return;
+			}
+			await saveImage(srcUrl, pageUrl);
+		}
+		else if (info.menuItemId === 'trilium-save-link') {
+			const linkUrl = info.linkUrl || '';
+			if (!linkUrl) {
+				console.error("No link URL available");
+				return;
+			}
 
+			// Create HTML string directly instead of using DOM APIs
+			const linkText = info.linkText || linkUrl;
+			const linkHtml = `<a href="${linkUrl}">${linkText}</a>`;
+
+			const resp = await getTriliumServerFacade().callService('POST', 'clippings', {
+				title: activeTab?.title || 'Saved Link',
+				content: linkHtml,
+				pageUrl: pageUrl
+			});
+
+			if (!resp) {
+				return;
+			}
+
+			await ensureI18nInitialized();
+			toast(t("link_saved"), resp.noteId);
+		}
+		else if (info.menuItemId === 'trilium-save-page') {
+			await saveWholePage();
+		}
+		else {
+			console.log("Unrecognized menuItemId", info.menuItemId);
+		}
+	} catch (error) {
+		console.error("Error in context menu handler:", error);
 		await ensureI18nInitialized();
-		toast(t("link_saved"), resp.noteId);
-	}
-	else if (info.menuItemId === 'trilium-save-page') {
-		await saveWholePage();
-	}
-	else {
-		console.log("Unrecognized menuItemId", info.menuItemId);
+		toast(t("failed_to_save", {error: error.message}) || "Failed to save: " + error.message);
 	}
 });
 
