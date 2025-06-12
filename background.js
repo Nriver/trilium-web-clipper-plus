@@ -100,6 +100,24 @@ async function takeWholeScreenshot() {
 	return await browser.tabs.captureVisibleTab(null, { format: 'png' });
 }
 
+// Function to set development icon
+async function setDevIcon() {
+	if (isDevEnv()) {
+		try {
+			await browser.action.setIcon({
+				path: {
+					"16": "icons/logo3-dev_16x16.png",
+					"48": "icons/logo3-dev_48x48.png",
+					"128": "icons/logo3-dev_128x128.png"
+				}
+			});
+			console.log("Development icon set successfully");
+		} catch (error) {
+			console.error("Failed to set development icon:", error);
+		}
+	}
+}
+
 // Create context menus with i18n support
 async function createContextMenus() {
 	try {
@@ -157,11 +175,7 @@ async function createContextMenus() {
 }
 
 browser.runtime.onInstalled.addListener(async () => {
-	if (isDevEnv()) {
-		browser.action.setIcon({
-			path: 'icons/logo3-dev_128x128.png',
-		});
-	}
+	await setDevIcon();
 
 	// Create context menus on installation/update
 	await createContextMenus();
@@ -169,11 +183,13 @@ browser.runtime.onInstalled.addListener(async () => {
 
 // Also create context menus when service worker starts up
 browser.runtime.onStartup.addListener(async () => {
+	await setDevIcon();
 	await createContextMenus();
 });
 
-// Create context menus immediately when script loads (for development reloads)
+// Create context menus and set dev icon immediately when script loads (for development reloads)
 createContextMenus();
+setDevIcon();
 
 async function getActiveTab() {
 	const tabs = await browser.tabs.query({
