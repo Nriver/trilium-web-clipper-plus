@@ -2,6 +2,9 @@
 
 [English README](README.md)
 
+[Chrome应用商店下载链接](https://chromewebstore.google.com/detail/trilium-web-clipper-plus/adkalonadklcbfpfgfjhkgaopdpljlkj)
+
+
 > 💡 *如果你已经坐了很久，不妨起来活动一下身体 :)*
 
 ## ✨ 简介

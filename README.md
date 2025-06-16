@@ -2,6 +2,8 @@
 
 [中文说明](README_CN.md)
 
+[Get it on Chrome Web Store](https://chromewebstore.google.com/detail/trilium-web-clipper-plus/adkalonadklcbfpfgfjhkgaopdpljlkj)
+
 > 💡 *Take a quick break and stretch if you've been sitting too long :)*
 
 ## ✨ Overview
