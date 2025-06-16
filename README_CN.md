@@ -61,3 +61,19 @@
 本扩展基于原始项目 [Trilium Web Clipper](https://github.com/zadam/trilium-web-clipper)，感谢作者 [zadam](https://github.com/zadam) 为 Trilium Notes 所做的出色工作！
 
 部分代码也参考了 [Joplin Notes 浏览器剪藏扩展](https://github.com/laurent22/joplin/tree/master/Clipper)。
+
+---
+
+## 📝 许可证说明
+
+本项目整体采用 **GNU Affero General Public License 第3版 (AGPLv3)** 许可发布。
+
+详情请参见项目根目录的 [LICENSE](./LICENSE) 文件。
+
+---
+
+项目包含部分最初采用 **MIT 许可证** 授权的代码，相关版权和许可声明保留在 [LICENSE.MIT](./LICENSE.MIT) 文件及源代码文件中。
+
+使用本项目即表示你同意遵守 AGPLv3 许可条款，同时尊重原 MIT 代码的版权和许可声明。
+
+更多关于 AGPLv3 许可证的信息，请访问：[https://www.gnu.org/licenses/agpl-3.0.html](https://www.gnu.org/licenses/agpl-3.0.html)

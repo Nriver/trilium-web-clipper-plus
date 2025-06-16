@@ -60,3 +60,20 @@ If you enjoy using **Trilium Web Clipper Plus**, your support would mean a lot!
 This extension is based on the original [Trilium Web Clipper](https://github.com/zadam/trilium-web-clipper) by [zadam](https://github.com/zadam)—huge thanks for his outstanding work on Trilium Notes!
 
 Portions of the code are also inspired by the [Joplin Notes Clipper](https://github.com/laurent22/joplin/tree/master/Clipper).
+
+---
+
+## 📝 License
+
+This project is licensed under the **GNU Affero General Public License version 3 (AGPLv3)**.
+
+See the [LICENSE](./LICENSE) file for details.
+
+---
+
+This project includes code originally licensed under the **MIT License** by the original author(s).  
+Their copyright and permission notices are preserved in the [LICENSE.MIT](./LICENSE.MIT) file and within the source files.
+
+By using this project, you agree to comply with the terms of the AGPLv3 license while respecting the original MIT license terms for the included code.
+
+For more information about AGPLv3, see: [https://www.gnu.org/licenses/agpl-3.0.html](https://www.gnu.org/licenses/agpl-3.0.html)
