@@ -1,5 +1,7 @@
 # Trilium Web Clipper Plus
 
+![logo](docs/banner.webp)
+
 [English README](README.md)
 
 [Chrome应用商店下载链接](https://chromewebstore.google.com/detail/trilium-web-clipper-plus/adkalonadklcbfpfgfjhkgaopdpljlkj)
