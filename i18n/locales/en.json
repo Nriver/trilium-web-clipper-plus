@@ -63,5 +63,9 @@
   "save_image_context": "Save image to Trilium",
   "image_saved": "Image has been saved to Trilium.",
   "drag_release_screenshot": "Drag and release to capture a screenshot",
-  "trilium_connection_failed": "Your request failed because we could not contact Trilium instance. Please make sure Trilium is running and is accessible."
+  "trilium_connection_failed": "Your request failed because we could not contact Trilium instance. Please make sure Trilium is running and is accessible.",
+  "auto_clip_patterns_title": "Auto‑clip URL patterns",
+  "auto_clip_patterns_desc": "When the page URL matches any of these patterns (one per line), automatically clip the whole page.",
+  "save_auto_clip_btn": "Save patterns",
+  "auto_clip_patterns_saved": "Patterns saved."
 }

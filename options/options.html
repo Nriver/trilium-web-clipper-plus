@@ -54,6 +54,11 @@
     <p data-i18n="password_note">Note that the entered password is not stored anywhere, it will be only used to retrieve an authorization token from the server instance which will be then used to send the clipped notes.</p>
 </form>
 
+<h2 data-i18n="auto_clip_patterns_title">Auto clip URL patterns</h2>
+<p data-i18n="auto_clip_patterns_desc">When page URL matches any of these patterns (one per line), clip the whole page automatically.</p>
+<textarea id="auto-clip-patterns" rows="5" style="width:100%;"></textarea><br/>
+<button id="save-auto-clip" data-i18n="save_auto_clip_btn">Save patterns</button>
+
 <div style="margin-top: 20px;">
     <label for="language-select" data-i18n="language">Language:</label>
     <select id="language-select" style="margin-left: 10px;">
