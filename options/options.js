@@ -4,6 +4,9 @@ const $triliumServerPassword = $("#trilium-server-password");
 const $errorMessage = $("#error-message");
 const $successMessage = $("#success-message");
 
+const $autoClipPatterns = $("#auto-clip-patterns");
+const $saveAutoClipBtn = $("#save-auto-clip");
+
 function showError(message) {
     $errorMessage.html(message).show();
     $successMessage.hide();
@@ -104,6 +107,14 @@ $triilumDesktopSetupForm.on("submit", e => {
     showSuccess(t("port_saved"));
 });
 
+function saveAutoClipPatterns() {
+    const patterns = $autoClipPatterns.val();
+    browser.storage.sync.set({
+        autoClipPatterns: patterns
+    });
+    showSuccess(t("auto_clip_patterns_saved"));
+}
+
 async function restoreOptions() {
     const {triliumServerUrl} = await browser.storage.sync.get("triliumServerUrl");
     const {authToken} = await browser.storage.sync.get("authToken");
@@ -128,8 +139,10 @@ async function restoreOptions() {
     }
 
     const {triliumDesktopPort} = await browser.storage.sync.get("triliumDesktopPort");
-
     $triliumDesktopPort.val(triliumDesktopPort);
+
+    const {autoClipPatterns} = await browser.storage.sync.get("autoClipPatterns");
+    $autoClipPatterns.val(autoClipPatterns || '');
 }
 
 // Language selector functionality
@@ -138,6 +151,12 @@ const $languageSelect = $("#language-select");
 $languageSelect.on("change", async (e) => {
     const selectedLanguage = e.target.value;
     await changeLanguage(selectedLanguage);
+});
+
+// Auto-clip pattern save button
+$saveAutoClipBtn.on("click", (e) => {
+    e.preventDefault();
+    saveAutoClipPatterns();
 });
 
 // Initialize i18n and restore options

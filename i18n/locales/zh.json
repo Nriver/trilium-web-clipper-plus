@@ -63,5 +63,9 @@
   "save_image_context": "保存图片到 Trilium",
   "image_saved": "图片已保存到 Trilium。",
   "drag_release_screenshot": "拖拽并释放以截取屏幕截图",
-  "trilium_connection_failed": "您的请求失败，因为无法联系 Trilium 实例。请确保 Trilium 正在运行且可访问。"
+  "trilium_connection_failed": "您的请求失败，因为无法联系 Trilium 实例。请确保 Trilium 正在运行且可访问。",
+  "auto_clip_patterns_title": "自动剪藏 URL 模式",
+  "auto_clip_patterns_desc": "当页面 URL 匹配以下任一模式（每行一个）时，将自动剪藏整个页面。",
+  "save_auto_clip_btn": "保存模式",
+  "auto_clip_patterns_saved": "模式已保存。"
 }
