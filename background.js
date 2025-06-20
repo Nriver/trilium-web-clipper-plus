@@ -630,3 +630,27 @@ browser.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 	return true; // Keep message channel open for async response
 });
+
+// auto clip page
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
+  if (changeInfo.status === 'complete' && tab.url) {
+    chrome.storage.sync.get({ autoClipPatterns: '' }, async (items) => {
+      const patterns = items.autoClipPatterns
+        .split('\n')
+        .map(s => s.trim())
+        .filter(Boolean);
+      
+      if (patterns.length === 0) return;
+      
+      for (let p of patterns) {
+        const regex = new RegExp('^' + p.replace(/\*/g, '.*') + '$');
+        if (regex.test(tab.url)) {
+          const result = await saveWholePage();
+          sendResponse({success: true, result: result});
+          break;
+        }
+      }
+    });
+  }
+});
+
