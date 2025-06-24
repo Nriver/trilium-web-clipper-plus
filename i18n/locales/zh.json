@@ -67,5 +67,9 @@
   "auto_clip_patterns_title": "自动剪藏 URL 模式",
   "auto_clip_patterns_desc": "当页面 URL 匹配以下任一模式（每行一个）时，将自动剪藏整个页面。",
   "save_auto_clip_btn": "保存模式",
-  "auto_clip_patterns_saved": "模式已保存。"
+  "auto_clip_patterns_saved": "模式已保存。",
+  "save_link_options_title": "保存链接和笔记选项",
+  "include_url_in_note_label": "在笔记内容开头包含页面 URL",
+  "include_url_in_note_desc": "启用后，使用\"保存链接和笔记\"功能时，当前页面 URL 将添加到笔记内容的开头。",
+  "include_url_setting_saved": "URL 包含设置已保存。"
 }

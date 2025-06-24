@@ -385,6 +385,15 @@ async function saveLinkWithNote(title, content) {
 		title = activeTab.title;
 	}
 
+	// Check if user wants to include URL in note content
+	const {includeUrlInNote} = await browser.storage.sync.get("includeUrlInNote");
+
+	if (includeUrlInNote && content.trim()) {
+		// Add URL at the beginning of content if the setting is enabled
+		const urlLine = `<p><a href="${activeTab.url}">${activeTab.url}</a></p>`;
+		content = urlLine + content;
+	}
+
 	const resp = await getTriliumServerFacade().callService('POST', 'notes', {
 		title: title,
 		content: content,

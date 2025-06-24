@@ -67,5 +67,9 @@
   "auto_clip_patterns_title": "Auto‑clip URL patterns",
   "auto_clip_patterns_desc": "When the page URL matches any of these patterns (one per line), automatically clip the whole page.",
   "save_auto_clip_btn": "Save patterns",
-  "auto_clip_patterns_saved": "Patterns saved."
+  "auto_clip_patterns_saved": "Patterns saved.",
+  "save_link_options_title": "Save Link with Note Options",
+  "include_url_in_note_label": "Include page URL at the beginning of note content",
+  "include_url_in_note_desc": "When enabled, the current page URL will be added at the beginning of the note content when using \"Save link with a note\".",
+  "include_url_setting_saved": "URL inclusion setting saved."
 }

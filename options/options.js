@@ -6,6 +6,7 @@ const $successMessage = $("#success-message");
 
 const $autoClipPatterns = $("#auto-clip-patterns");
 const $saveAutoClipBtn = $("#save-auto-clip");
+const $includeUrlInNote = $("#include-url-in-note");
 
 function showError(message) {
     $errorMessage.html(message).show();
@@ -115,6 +116,14 @@ function saveAutoClipPatterns() {
     showSuccess(t("auto_clip_patterns_saved"));
 }
 
+function saveIncludeUrlInNote() {
+    const includeUrl = $includeUrlInNote.prop('checked');
+    browser.storage.sync.set({
+        includeUrlInNote: includeUrl
+    });
+    showSuccess(t("include_url_setting_saved"));
+}
+
 async function restoreOptions() {
     const {triliumServerUrl} = await browser.storage.sync.get("triliumServerUrl");
     const {authToken} = await browser.storage.sync.get("authToken");
@@ -143,6 +152,9 @@ async function restoreOptions() {
 
     const {autoClipPatterns} = await browser.storage.sync.get("autoClipPatterns");
     $autoClipPatterns.val(autoClipPatterns || '');
+
+    const {includeUrlInNote} = await browser.storage.sync.get("includeUrlInNote");
+    $includeUrlInNote.prop('checked', includeUrlInNote || false);
 }
 
 // Language selector functionality
@@ -157,6 +169,11 @@ $languageSelect.on("change", async (e) => {
 $saveAutoClipBtn.on("click", (e) => {
     e.preventDefault();
     saveAutoClipPatterns();
+});
+
+// Include URL in note checkbox change handler
+$includeUrlInNote.on("change", () => {
+    saveIncludeUrlInNote();
 });
 
 // Initialize i18n and restore options
