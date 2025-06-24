@@ -14,10 +14,11 @@
 
 This project is a fork of [zadam/trilium-web-clipper](https://github.com/zadam/trilium-web-clipper), with added features and updates by **Nriver**.
 
-## 🚀 Key Features
+## 🚀 Key New Features
 
 * ✔️ Compatible with Chrome Manifest V3
 * 🌐 Internationalization (i18n) support
+* 🔄 Auto clip
 * 🔧 Bug fixes and improvements
 * 🆕 New name and logo
 
