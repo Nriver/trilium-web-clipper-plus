@@ -21,6 +21,7 @@ This project is a fork of [zadam/trilium-web-clipper](https://github.com/zadam/t
 * 🔄 Auto clip
 * 🔧 Bug fixes and improvements
 * 🆕 New name and logo
+* ✨ Option to include URL in note content when saving link with a note
 
 If you find this project helpful, please consider [supporting my work](#donation). Thank you!
 
