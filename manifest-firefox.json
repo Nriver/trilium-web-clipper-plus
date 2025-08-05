@@ -1,0 +1,103 @@
+{
+  "manifest_version": 3,
+  "name": "Trilium Web Clipper Plus",
+  "version": "1.2.1",
+  "description": "Save web clippings to Trilium Notes. Forked from zadam/trilium-web-clipper, modded by Nriver.",
+  "homepage_url": "https://github.com/Nriver/trilium-web-clipper-plus",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "icons": {
+    "16": "icons/logo3_16x16.png",
+    "48": "icons/logo3_48x48.png",
+    "128": "icons/logo3_128x128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "contextMenus",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://*/",
+    "https://*/",
+    "<all_urls>"
+  ],
+  "action": {
+    "default_icon": {
+      "16": "icons/logo3_16x16.png",
+      "48": "icons/logo3_48x48.png",
+      "128": "icons/logo3_128x128.png"
+    },
+    "default_title": "Trilium Web Clipper Plus",
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "lib/browser-polyfill.js",
+        "utils.js",
+        "content.js"
+      ]
+    }
+  ],
+  "background": {
+    "scripts": [
+      "lib/browser-polyfill.js",
+      "utils.js",
+      "trilium_server_facade.js",
+      "i18n/i18n.js",
+      "background.js"
+    ]
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": false
+  },
+  "commands": {
+    "saveSelection": {
+      "description": "Save the selected text into a note",
+      "suggested_key": {
+        "default": "Ctrl+Shift+S"
+      }
+    },
+    "saveWholePage": {
+      "description": "Save the current page",
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      }
+    },
+    "saveCroppedScreenshot": {
+      "description": "Take a cropped screenshot of the current page",
+      "suggested_key": {
+        "default": "Ctrl+Shift+E"
+      }
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "lib/JSDOMParser.js",
+        "lib/Readability.js",
+        "lib/Readability-readerable.js",
+        "lib/toast.js",
+        "i18n/i18n.js",
+        "i18n/locales/en.json",
+        "i18n/locales/zh.json"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "adkalonadklcbfpfgfjhkgaopdpljlkj@foxify",
+      "strict_min_version": "91.0"
+    }
+  }
+}
