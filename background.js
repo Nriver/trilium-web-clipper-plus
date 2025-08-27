@@ -1,5 +1,23 @@
-// Import dependencies for service worker
-importScripts('lib/browser-polyfill.js', 'utils.js', 'trilium_server_facade.js', 'i18n/i18n.js');
+// Load dependencies for background script (Firefox compatible)
+console.log('Background script starting...', typeof importScripts !== 'undefined' ? 'Service Worker' : 'Background Script');
+
+// Check if we're in a service worker context or background script context
+if (typeof importScripts !== 'undefined') {
+    // Service worker context (Chrome)
+    console.log('Loading dependencies via importScripts (Chrome)');
+    importScripts('lib/browser-polyfill.js', 'utils.js', 'trilium_server_facade.js', 'i18n/i18n.js');
+} else {
+    // Background script context (Firefox) - dependencies should be loaded via script tags in manifest
+    console.log('Dependencies loaded via manifest scripts array (Firefox)');
+    // The scripts are already loaded in the correct order via the manifest.json background.scripts array
+}
+
+console.log('Background script dependencies loaded, checking globals:', {
+    browser: typeof browser,
+    chrome: typeof chrome,
+    initI18n: typeof initI18n,
+    getTriliumServerFacade: typeof getTriliumServerFacade
+});
 
 // Ensure triliumServerFacade is available globally
 function getTriliumServerFacade() {

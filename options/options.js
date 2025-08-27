@@ -178,10 +178,27 @@ $includeUrlInNote.on("change", () => {
 
 // Initialize i18n and restore options
 $(async () => {
-    await initI18n();
+    console.log('Options page initializing...');
+    console.log('Available globals:', {
+        browser: typeof browser,
+        chrome: typeof chrome,
+        initI18n: typeof initI18n,
+        $: typeof $
+    });
+    
+    try {
+        console.log('Initializing i18n...');
+        await initI18n();
+        console.log('i18n initialized successfully');
 
-    // Set language selector to current language
-    $languageSelect.val(getCurrentLanguage());
+        // Set language selector to current language
+        $languageSelect.val(getCurrentLanguage());
+        console.log('Language selector set to:', getCurrentLanguage());
 
-    await restoreOptions();
+        console.log('Restoring options...');
+        await restoreOptions();
+        console.log('Options restored successfully');
+    } catch (error) {
+        console.error('Error initializing options page:', error);
+    }
 });
