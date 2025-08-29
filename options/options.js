@@ -1,5 +1,6 @@
 const $triliumServerUrl = $("#trilium-server-url");
 const $triliumServerPassword = $("#trilium-server-password");
+const $triliumServerTotp = $("#trilium-server-totp");
 
 const $errorMessage = $("#error-message");
 const $successMessage = $("#success-message");
@@ -38,7 +39,8 @@ async function saveTriliumServerSetup(e) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                password: $triliumServerPassword.val()
+                password: $triliumServerPassword.val(),
+                totpToken: ($triliumServerTotp && $triliumServerTotp.val) ? $triliumServerTotp.val() : ''
             })
         });
     }
@@ -59,6 +61,7 @@ async function saveTriliumServerSetup(e) {
         showSuccess(t("auth_successful"));
 
         $triliumServerPassword.val('');
+        if ($triliumServerTotp) { $triliumServerTotp.val(''); }
 
         browser.storage.sync.set({
             triliumServerUrl: $triliumServerUrl.val(),
@@ -133,6 +136,7 @@ async function restoreOptions() {
 
     $triliumServerUrl.val('');
     $triliumServerPassword.val('');
+    if ($triliumServerTotp) { $triliumServerTotp.val(''); }
 
     if (triliumServerUrl && authToken) {
         $triliumServerSetupForm.hide();

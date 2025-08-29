@@ -42,6 +42,8 @@
   "reconfigure": "并重新配置。",
   "trilium_server_url": "Trilium 服务器 URL：",
   "password": "密码：",
+  "totp_token": "TOTP 验证码：",
+  "totp_placeholder": "（可选）",
   "login_server": "登录到服务器实例",
   "password_note": "请注意，输入的密码不会存储在任何地方，仅用于从服务器实例获取授权令牌，然后用于发送剪藏的笔记。",
   "missing_inputs": "缺少一个或多个必填输入。请填写服务器 URL 和密码。",

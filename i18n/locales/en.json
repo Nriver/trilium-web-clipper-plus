@@ -42,6 +42,8 @@
   "reconfigure": "and configure it again.",
   "trilium_server_url": "Trilium server URL:",
   "password": "Password:",
+  "totp_token": "TOTP code:",
+  "totp_placeholder": "(optional)",
   "login_server": "Login to the server instance",
   "password_note": "Note that the entered password is not stored anywhere, it will be only used to retrieve an authorization token from the server instance which will be then used to send the clipped notes.",
   "missing_inputs": "One or more mandatory inputs are missing. Please fill in server URL and password.",
